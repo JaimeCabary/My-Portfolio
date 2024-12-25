@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heckstacula</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #000428, #004e92);
+            color: #ffffff;
+            display: flex;
+        }
+        .about{
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            animation: slideIn 1s ease-out;
+        }
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background-color: rgba(0, 4, 40, 0.9);
+            padding: 20px;
+            position: fixed;
+            top: 0;
+            left: -250px; /* Hide sidebar by default */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: left 0.3s ease;
+            z-index: 1000;
+        }
+        .sidebar nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar nav a {
+            text-decoration: none;
+            color: #00ffd5;
+            transition: color 0.3s;
+            display: block;
+            padding: 10px 0;
+        }
+        .sidebar nav a:hover {
+            color: #ff00d4;
+        }
+        .sidebar nav a:active {
+            color: #ff00d4;
+        }
+        .menu-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 1001;
+            transition: transform 0.3s ease;
+        }
+        .menu-btn.active {
+            transform: rotate(90deg); /* Rotate button when active */
+        }
+        .menu-btn span {
+            display: block;
+            width: 23px;
+            height: 2.5px;
+            margin: 5px 0;
+            background-color: #ffffff;
+            transition: all 0.3s ease;
+        }
+        .container {
+            margin-left: 0;
+            padding: 20px;
+            width: 100%;
+        }
+        header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 0; /* Reduce header height */
+            position: fixed;
+            width: 100%;
+            top: 0;
+            background-color: rgba(0, 4, 40, 0.9);
+            z-index: 1000;
+        }
+        h1 {
+            font-size: 2rem; /* Reduce font size */
+            color: #00ffd5;
+            text-shadow: 0 0 10px rgba(0, 255, 213, 0.5);
+        }
+        .picture-placeholder {
+            margin-top: 100px; /* Adjust margin to prevent overlap with header */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .picture-placeholder img {
+            width:190px; /* Ensure the image fills the placeholder */
+            height: 250px;
+            border-radius: 45%;
+            box-shadow: 0 0 10px rgba(8, 20, 18, 0.5);
+            
+        }
+        section {
+            padding: 20px;
+            margin-top: 20px; /* Adjust top margin to accommodate fixed header */
+            animation: fadeIn 2s ease-in-out; /* Add fade-in animation to sections */
+        }
+        .project, .volunteer {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            animation: slideIn 1s ease-out; /* Add slide-in animation to projects and volunteer activities */
+        }
+        #educations, #skills, #hobbies {
+            padding: 20px;
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+
+        #education ul, #skills ul, #hobbies ul {
+            list-style: disc;
+            margin-left: 20px;
+            padding-left: 10px;
+        }
+
+        #education-skills-hobbies li {
+            line-height: 1.6;
+            color: #ffffff;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around; /* Centers images and adds even spacing */
+            gap: 15px; /* Increased gap for better spacing */
+            padding: 20px; /* Adds padding around the gallery */
+             /* Optional: sets a black background */
+        }
+
+        .gallery img {
+            max-width: calc(33.33% - 20px); /* Ensures 3 images per row with gaps */
+            flex-grow: 1;
+            border-radius: 8px; /* Slightly reduced rounding for a cleaner look */
+            box-shadow: 0 4px 10px rgba(0, 255, 213, 0.4); /* Adjusted shadow for subtlety */
+            transition: transform 0.3s, box-shadow 0.3s; /* Adds hover effect transitions */
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05); /* Slight zoom on hover */
+            box-shadow: 0 8px 15px rgba(0, 255, 213, 0.6); /* Enhanced shadow on hover */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideIn {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-btn" onclick="toggleSidebar()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <div class="sidebar" id="sidebar">
+        <nav>
+            <ul>
+                <li><a href="#picture-placeholder" onclick="closeSidebar()">About</a></li>
+                <li><a href="#projects" onclick="closeSidebar()">Projects</a></li>
+                <li><a href="#volunteer" onclick="closeSidebar()">Volunteer Activities</a></li>
+                <li><a href="#gallery" onclick="closeSidebar()">Gallery</a></li>
+                <li><a href="#contact" onclick="closeSidebar()">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="container">
+        <header>
+            <h1>SHALOM EBERE CHIDI-AZUWIKE</h1>
+        </header>
+        <div class="picture-placeholder">
+            <img src="cabondo.png" alt="Picture Placeholder">
+        </div>
+        <section id="about"> <h2>About Me</h2> <p>Hi, I'm Shalom Chidi-Azuwike, a 20-year-old software engineering student at FUTO with a CGPA of 4.86. I am passionate about innovation, storytelling, and making a positive impact in my community.</p> 
+            <p> My love for reading, which began at age four, ignited my journey as a writer. I've authored books like <em>The Billionaire's Son</em> and <em>Caught in Between</em> under the pseudonym Jaime Cabary. 
+                <p>I've developed three websites, including my portfolio, and designed an app called Bizvest. I'm a Microsoft Learn Student Ambassador and Samsung Student Ambassador, advocating for digital skills and innovation.</p> 
+                My goal is to create robotic works of art to better humanity. Inspired by visionaries like Elon Musk, I aspire to visit Mars and contribute to making humanity a multiplanetary species.</p> 
+            </section>
+            <br>   
+            <br>
+            <section id="education">
+                <div class="educations">
+                    <h3>Education</h3>
+                    <ul>
+                        <li><strong>Federal University of Technology Owerri (FUTO)</strong>: Bachelor of Science in Software Engineering (CGPA: 4.86, 2021 - Present)</li>
+                        <li><strong>Federal Government Girls' College Owerri</strong>: Senior Secondary Certificate Examination (SSCE), 2015 - 2021</li>
+                        <li><strong>Living World Academy</strong>: Primary School Leaving Certificate, 2005 - 2015</li>
+                    </ul>
+                </div>
+            </section>
+            <section id="skill">
+                <h3>Skills</h3>  
+                <div class="skills">
+                    
+                    <ul>
+                        <li>Proficient in HTML, CSS, JavaScript, and Python</li>
+                        <li>Experience with responsive web design and app development</li>
+                        <li>Knowledge of robotics and IoT technologies</li>
+                        <li>Strong writing and storytelling abilities</li>
+                        <li>Leadership and project management skills</li>
+                    </ul>
+                </div>
+            </section>
+            <section id="hobby">
+                <h3>Hobbies</h3>
+                <div class="hobbies">
+                    
+                    <ul>
+                        <li>Creative writing and storytelling</li>
+                        <li>Reading books and exploring new ideas</li>
+                        <li>Painting and digital art</li>
+                        <li>Exploring emerging technologies</li>
+                        <li>Singing and composing music</li>
+                    </ul>
+                </div>
+            </section>
+            
+        <section id="projects">
+            <h2>Projects</h2>
+            <div class="project">
+                <h3>Solar Project for IEEE</h3>
+                <p>Provided clean water to society by working on a solar dryer and solar borehole for Umuokanne Community farm and General Hospital respectively.</p>
+            </div>
+            <div class="project"> 
+                <h3>A Beautiful Web Form</h3> 
+                <p><a href="https://github.com/JaimeCabary/A-beautiful-Web-Form/blob/main/webforrm.html" target="_blank">View Project</a>
+                </p> 
+            </div> 
+            <div class="project"> 
+                <h3>Chidi-Azuwike Shalom CIT-306 Web Form</h3> 
+                <p><a href="https://github.com/JaimeCabary/Chidi-Azuwike-Shalom-CIT-306-Web-Form/blob/main/Shacabondo.html" target="_blank">View Project</a>
+                </p> 
+            </div> 
+            <div class="project"> 
+                <h3>Nigeria-Net</h3> <p><a href="https://github.com/JaimeCabary/Nigeria-Net" target="_blank">View Project</a>
+                </p> 
+            </div>
+            <div class="project">
+                <h3>DevFest Owerri 2024</h3>
+                <p>Volunteered for DevFest Owerri 2024.</p>
+            </div>
+            <div class="project">
+                <h3>Hack for FUTO</h3>
+                <p>Participated in Hack for FUTO, a hackathon.</p>
+            </div>
+            <div class="project">
+                <h3>Toolbox 2024</h3>
+                <p>Participated in Toolbox 2024, a hackathon for grants.</p>
+            </div>
+            <div class="project">
+                <h3>Blog Content from Jaime Cabary</h3>
+                <p>Created blog content under the pen name Jaime Cabary.</p>
+            </div>
+            <div class="project">
+                <h3>Books</h3>
+                <p>Author of books like <em>The Gauntlet</em>, <em>The Billionaire's Son</em>, and <em>Caught in Between</em>.</p>
+            </div>
+        </section>
+            <section id="volunteer">
+                <h2>Volunteer Activities</h2>
+                <div class="volunteer">
+                    <h3>DevFest Owerri 2024</h3>
+                    <p>Volunteered for DevFest Owerri 2024.</p>
+                </div>
+                <div class="volunteer">
+                    <h3>Hack for FUTO</h3>
+                    <p>Participated in Hack for FUTO, a hackathon.</p>
+                </div>
+                <div class="volunteer">
+                    <h3>Toolbox 2024</h3>
+                    <p>Participated in Toolbox 2024, a hackathon for grants.</p>
+                </div>
+                <div class="volunteer">
+                    <h3>IEEE Projects</h3>
+                    <p>Assisted in providing solar streetlights for a community near my school and worked on a solar dryer and solar-powered borehole for Umuokanne Community Farm and General Hospital.</p>
+                </div>
+                <div class="volunteer">
+                    <h3>TEFEM Network</h3>
+                    <p>Volunteered for TEFEM Network, focusing on humanitarian efforts and empowering women and men in STEM.</p>
+                </div>
+            </section>
+            <section id="gallery">
+                <h2>Gallery</h2>
+                <div class="gallery">
+                    <img src="Screenshot (194).png" alt="Screenshot 194">
+                    <img src="Screenshot (195).png" alt="Screenshot 195">
+                    <img src="Screenshot (260).png" alt="Screenshot 260">
+                    <img src="Screenshot (261).png" alt="Screenshot 261">
+                    <img src="Screenshot (282).png" alt="Screenshot 282">
+                    <img src="Screenshot (283).png" alt="Screenshot 283">
+                    <img src="Screenshot (302).png" alt="Screenshot 302">
+                    <img src="Screenshot (329).png" alt="Screenshot 329">
+                    
+                    <img src="Screenshot (493).png" alt="Screenshot 493">
+                    <img src="solar dryer unit.png" alt="Solar Dryer Unit">
+                </div>
+            </section>
+            <section id="contact">
+                <h2>Contact</h2>
+                <p>Email: your.email@example.com</p>
+                <p>LinkedIn: <a href="https://www.linkedin.com/in/shalom-chidi-azuwike" target="_blank">Shalom Chidi-Azuwike</a></p>
+                <p>Blog: <a href="https://sashassahaydes.blogspot.com" target="_blank">sashassahaydes.blogspot.com</a></p>
+                <p>GitHub: <a href="https://github.com/your-github-username" target="_blank">GitHub Profile</a></p>
+            </section>
+            <footer>
+                <p>&copy; 2024 Heckstacula. All rights reserved.</p>
+            </footer>
+        </div>
+        <script>
+            const sidebar = document.getElementById('sidebar');
+            const menuBtn = document.querySelector('.menu-btn');
+            const body = document.body;
+    
+            function toggleSidebar() {
+                sidebar.style.left = sidebar.style.left === '0px' ? '-250px' : '0px';
+                body.style.marginLeft = body.style.marginLeft === '250px' ? '0' : '250px'; // Shift body content
+                menuBtn.classList.toggle('active'); // Rotate menu button when active
+            }
+    
+            function closeSidebar() {
+                sidebar.style.left = '-250px'; 
+                body.style.marginLeft = '0';
+                menuBtn.classList.remove('active');
+            }
+        </script>
+    </body>
+    </html>
+    

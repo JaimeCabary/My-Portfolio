@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heckstacula</title>
+    <style>
+        body {
+            background-color: #1b1b1b;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            text-align: center;
+            padding: 50px;
+            background-color: #282828;
+        }
+
+        header h1 {
+            color: #ff4500; /* Red-orange color */
+        }
+
+        header p {
+            color: #ccc;
+        }
+
+        nav {
+            background-color: #333;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav ul li a:hover {
+            color: #ff4500;
+        }
+
+        section {
+            padding: 50px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #282828;
+            color: #ccc;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Heckstacula</h1>
+        <p>Innovator, Creator, and Advocate for a Better World</p>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#about">About Me</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#blog">Blog</a></li>
+            <li><a href="#resume">Achievements</a></li>
+            <li><a href="#contact">Contact Me</a></li>
+        </ul>
+    </nav>
+    <section id="about">
+        <h2>About Me</h2>
+        <p>I'm a 19-year-old software engineering student at FUTO with a GPA of 4.67...</p>
+    </section>
+    <section id="portfolio">
+        <h2>Portfolio</h2>
+        <!-- Add your projects here -->
+    </section>
+    <section id="blog">
+        <h2>Blog</h2>
+        <!-- Embed your blog here -->
+    </section>
+    <section id="resume">
+        <h2>Achievements</h2>
+        <!-- List your achievements here -->
+    </section>
+    <section id="contact">
+        <h2>Contact Me</h2>
+        <form>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+            <label for="message">Message</label>
+            <textarea id="message" name="message" required></textarea>
+            <button type="submit">Send</button>
+        </form>
+    </section>
+    <footer>
+        <p>&copy; 2024 Heckstacula. All rights reserved.</p>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add your interactivity here
+        });
+    </script>
+</body>
+</html>
